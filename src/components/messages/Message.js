@@ -20,7 +20,7 @@ function Message(props) {
 
         console.log(props.index);
         console.log("REPLY: ", replyMessage);
-        
+
         props.replyToMessage(props.index, newReply);
         setReplyMessage("");
     }
