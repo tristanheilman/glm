@@ -4,6 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
+    "site": "greek-life-manager-66e79",
     "public": "build",
     "ignore": [
       "firebase.json",

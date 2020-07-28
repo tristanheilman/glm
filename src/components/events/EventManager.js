@@ -2,16 +2,20 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 
-import Event from './Event';
-
+import { fetchEvents } from '../../api/FirebaseEvents';
 import { setEventList } from '../../actions/activities';
 
+import Event from './Event';
+
+
 function EventManager(props) {
+    const [ lastVisible, setLastVisible ] = React.useState({});
+    const [ refresh, setRefresh ] = React.useState({});
+
 
     useEffect(() => {
-        // TODO Fetch classes function here
-
-    }, []);
+        fetchEvents(props.setEvents, setLastVisible, setRefresh)
+    }, [props.setEvents]);
 
     const addEvent = () => {
         props.navigation.navigate("AddEvent");
@@ -26,6 +30,7 @@ function EventManager(props) {
             </View>
             <FlatList
                 data={props.events}
+                keyExtractor={(item, index) => item.eventId}
                 renderItem={({item, index}) => <Event navigation={props.navigation} item={item} index={index} showAdd={true} />}
             />
         </View>

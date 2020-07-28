@@ -6,10 +6,8 @@ import {
     REPLY_TO_MESSAGE
 } from '../actions/messages';
 
-import { messageData } from './data';
-
 const initialState = {
-    messages: messageData
+    messages: []
 }
 
 export default function messageBoardReducer(state = initialState, action) {

@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
-import { addNewEvent } from '../../actions/activities';
+import { ADD_NEW_EVENT } from '../../actions/activities';
+import { addNewEvent } from '../../api/FirebaseEvents';
 
 function AddEvent(props) {
     const [ name, setName ] = React.useState("")
@@ -25,6 +26,7 @@ function AddEvent(props) {
         };
 
         props.addNewEvent(newEvent);
+        addNewEvent(newEvent, {name: "Default", email: "default@default.com"});
         props.navigation.goBack();
     }
 
@@ -62,7 +64,7 @@ const mapStateToProps = ({ activities }) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addNewEvent: (newEvent) => dispatch(addNewEvent(newEvent))
+        addNewEvent: (newEvent) => dispatch({ type: ADD_NEW_EVENT, payload: newEvent })
     }
 }
 

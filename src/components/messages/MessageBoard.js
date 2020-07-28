@@ -4,24 +4,28 @@ import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
 
 import Message from './Message';
 
-import { setMessageBoard, addNewMessage } from '../../actions/messages';
+import { setMessageBoard, ADD_NEW_MESSAGE } from '../../actions/messages';
+import { fetchMessages, addNewMessage } from '../../api/FirebaseMessages';
 
 function MessageBoard(props) {
+    const [ lastVisible, setLastVisible ] = React.useState({});
+    const [ refresh, setRefresh ] = React.useState(false);
     const [ messageText, setMessageText ] = React.useState("")
 
     useEffect(() => {
         // TODO Fetch classes function here
-
-    }, []);
+        fetchMessages(props.setMessages, setLastVisible, setRefresh);
+    }, [props.setMessages]);
 
     const sendNewMessage = () => {
         const newMessage = {
-            name: "Default",
-            text: messageText,
-            isThread: false,
+            ownerName: props.user.name,
+            ownerEmail: props.user.email,
+            message: messageText,
             replies: []
         }
 
+        addNewMessage(messageText, props.user)
         props.addNewMessage(newMessage);
         setMessageText("");
     }
@@ -39,6 +43,7 @@ function MessageBoard(props) {
             </View>
             <FlatList
                 data={props.messages}
+                keyExtractor={(item, index) => item.messageId}
                 renderItem={({item, index}) => <Message navigation={props.navigation} item={item} index={index}/>}
             />
         </View>
@@ -46,14 +51,15 @@ function MessageBoard(props) {
 }
 
 
-const mapStateToProps = ({ messageBoard }) => ({
-    messages: messageBoard.messages
+const mapStateToProps = ({ user, messageBoard }) => ({
+    messages: messageBoard.messages,
+    user: user.info
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setMessages: (messages) => dispatch(setMessageBoard(messages)),
-        addNewMessage: (newMessage) => dispatch(addNewMessage(newMessage))
+        addNewMessage: (newMessage) => dispatch({type: ADD_NEW_MESSAGE, payload: newMessage})
 
     }
 }

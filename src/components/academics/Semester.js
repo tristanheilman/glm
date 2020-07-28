@@ -8,16 +8,16 @@ function Semester(props) {
     }, []);
 
 
-    const addCourse = (index) => {
-        props.navigation.navigate("AddCourse", {index: index});
+    const addCourse = () => {
+        props.navigation.navigate("AddCourse", {item: props.item});
     }
 
     return (
-        <View key={props.index} style={{display: 'flex', margin: 10, padding: 20, backgroundColor: '#EDEDEE'}}>
+        <View style={{display: 'flex', margin: 10, padding: 20, backgroundColor: '#EDEDEE'}}>
             <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text>{props.item.semester}</Text>
+                <Text>{props.item.title}</Text>
                 {!props.showAdd ? <View /> :
-                    <TouchableOpacity style={{padding: 10, backgroundColor: '#6995F5'}} onPress={() => addCourse(props.index)}>
+                    <TouchableOpacity style={{padding: 10, backgroundColor: '#6995F5'}} onPress={() => addCourse()}>
                         <Text>Add Course</Text>
                     </TouchableOpacity>
                 }

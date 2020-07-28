@@ -5,10 +5,8 @@ import {
     ADD_NEW_EVENT
 } from '../actions/activities';
 
-import { eventData } from './data';
-
 const initialState = {
-    events: eventData
+    events: []
 }
 
 export default function activitiesReducer(state = initialState, action) {

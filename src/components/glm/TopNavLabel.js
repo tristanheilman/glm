@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 function TopNavLabel(props) {
 
@@ -7,13 +8,27 @@ function TopNavLabel(props) {
 
     }, []);
 
-    console.log(props.text);
+    const showEditName = () => {
+        props.navigation.navigate("EditName");
+    }
 
-    return (
-        <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{flex: 1, padding: 20}}>{props.text}</Text>
-        </View>
-    );
+    if(props.showName) {
+        return (
+            <TouchableOpacity style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} onPress={showEditName}>
+                <Text style={{flex: 1, padding: 20}}>{"Welcome, " + props.userName}</Text>
+            </TouchableOpacity>
+        );
+    } else {
+        return (
+            <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{flex: 1, padding: 20}}>{props.text}</Text>
+            </View>
+        );
+    }
 }
 
-export default TopNavLabel;
+const mapStateToProps = ({ user }) => ({
+    userName: user.info.name
+});
+
+export default connect(mapStateToProps, null)(TopNavLabel);
