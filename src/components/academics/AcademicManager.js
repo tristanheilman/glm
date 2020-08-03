@@ -34,7 +34,7 @@ function AcademicManager(props) {
             </View>
             <FlatList
                 data={props.classes}
-                keyExtractor={(item, index) => item.semesterId}
+                keyExtractor={(item, index) => item.semesterId ? item.semesterId : index.toString()}
                 renderItem={({item, index}) => <Semester navigation={props.navigation} item={item} showAdd={true} />}
             />
         </View>

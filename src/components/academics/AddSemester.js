@@ -15,18 +15,22 @@ function AddSemester(props) {
 
     }, []);
 
-    const saveSemesterData =() => {
+    const saveSemesterData = async () => {
         let newSemester = {
             title: semesterTitle,
             courses: []
         };
 
-        let updatedList = props.classes;
-        updatedList.push(newSemester);
+        let result = await addNewSemester(props.userId, semesterTitle, []);
 
-        props.setClasses(updatedList);
-        addNewSemester(props.userId, semesterTitle, []);
-        props.navigation.goBack();
+        if(result.successful) {
+            let updatedList = props.classes;
+            newSemester.semesterId = result.data.id;
+            updatedList.push(newSemester);
+            props.setClasses(updatedList);
+
+            props.navigation.goBack();
+        }
     }
 
     return (

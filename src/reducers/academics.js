@@ -5,10 +5,8 @@ import {
     UPDATE_CLASS_LIST
 } from '../actions/academics';
 
-import { semesterData } from './data';
-
 const initialState = {
-    classes: semesterData
+    classes: []
 }
 
 export default function academicsReducer(state = initialState, action) {

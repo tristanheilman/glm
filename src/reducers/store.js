@@ -8,7 +8,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['messageBoard']
+  blacklist: ['messageBoard', 'academics', 'activities', 'user']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
